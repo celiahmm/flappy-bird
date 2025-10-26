@@ -32,15 +32,6 @@ cd flappy-bird/src
 javac Game.java
 java Game
 ```
----
-
-
-## 💡 Code Structure
-
-- **Game.java**: creates the JFrame and initializes the game
-- **FlappyBird.java**: main game panel handling rendering, game loop, collision detection, and input
-- **Bird.java**: represents the player's bird
-- **Pipe.java**: represents pipe obstacles
 
 ---
 ## 🚀 Future Improvements
@@ -53,5 +44,5 @@ java Game
 ---
 ## 🎓 About the Project
 
-> Just a little learning project :)  
-> Feel free to play and improve it! ✨
+Just a little learning project :)  
+Feel free to play and improve it! ✨
