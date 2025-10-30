@@ -1,18 +1,17 @@
-// java
 import java.awt.*;
 
 public class Button {
 	private int x, y, width, height;
-	private String text;
-	private Image icon;
-	private Font font = new Font("American Typewriter", Font.BOLD, 24);
-	private Color buttonColor = new Color(0x6BD172);
-	private Color hoverColor = new Color(0x5AC262);
-	private Color textColor = new Color(0xEBFCDC);
+	private final String text;
+	private final Image icon;
+	private final Font font = new Font("American Typewriter", Font.BOLD, 24);
+	private final Color buttonColor = new Color(0x6BD172);
+	private final Color hoverColor = new Color(0x5AC262);
+	private final Color textColor = new Color(0xEBFCDC);
 	private boolean hover = false;
 	private int arc = 30;
 
-	// Constructor for text button
+	// constructor for text button
 	public Button(String text, int x, int y, int width, int height) {
 		this.text = text;
 		this.icon = null;
@@ -22,7 +21,7 @@ public class Button {
 		this.height = height;
 	}
 
-	// Constructor for icon button
+	// constructor for icon button
 	public Button(Image icon, int x, int y, int width, int height) {
 		this.icon = icon;
 		this.text = null;

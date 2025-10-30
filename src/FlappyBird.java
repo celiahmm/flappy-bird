@@ -180,7 +180,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
 			// instruction message below gameOverImage
 			g2d.setColor(Color.WHITE);
-			// g2d.setFont(new Font("American Typewriter", Font.BOLD, 20)); // remplacer par la police Flappy Bird.ttf
+			// g2d.setFont(new Font("American Typewriter", Font.BOLD, 20));
 			g2d.setFont(new Font("Flappy_Bird/Flappy Bird.ttf", Font.BOLD, 20));
 			String message = "[ Press SPACE to replay ]";
 			FontMetrics fm = g2d.getFontMetrics();

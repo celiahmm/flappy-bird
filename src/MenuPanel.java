@@ -71,7 +71,6 @@ public class MenuPanel extends JPanel {
 			int originalWidth = logoImg.getWidth(null);
 			int originalHeight = logoImg.getHeight(null);
 
-			// Limiter à 285px max en gardant les proportions
 			int maxWidth = 285;
 			int logoWidth = originalWidth;
 			int logoHeight = originalHeight;
