@@ -35,15 +35,20 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 	private static final int GAME_SPEED = 1000 / 60; // 60 FPS
 	private static final int PIPE_SPAWN_DELAY = 1500; // milliseconds
 
-	// IMAGES & FONT
+	// IMAGES
 	private Image backgroundImg;
 	private Image birdImg;
 	private Image topPipeImg;
 	private Image bottomPipeImg;
+	private Image gameOverImg;
+	private Image homeImg;
 
 	// GAME OBJECTS
 	private Bird bird;
 	private ArrayList<Pipe> pipes;
+
+	// HOME BUTTON (top right corner)
+	private final Button homeButton;
 
 	// GAME STATE
 	private double velocityY = 0;
@@ -54,40 +59,61 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 	private Timer gameLoop;
 	private Timer placePipesTimer;
 
-	/**
-	 * Constructor initializes the game panel and starts the game
-	 */
+	/* Constructor initializes the game panel and starts the game */
 	FlappyBird() {
 		setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 		setFocusable(true);
 		addKeyListener(this);
 
 		loadImages();
+
+		// home button in top right corner with icon
+		homeButton = new Button(homeImg, BOARD_WIDTH - 70, 10, 60, 50);
+
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (gameOver && homeButton.contains(e.getPoint())) {
+					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(FlappyBird.this);
+					frame.getContentPane().removeAll();
+					frame.getContentPane().add(new MenuPanel());
+					frame.revalidate();
+					frame.repaint();
+				}
+			}
+		});
+
+		addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if (gameOver) {
+					homeButton.setHover(homeButton.contains(e.getPoint()));
+					repaint();
+				}
+			}
+		});
+
 		initializeGame();
 		startTimers();
 	}
 
-	/**
-	 * Load all game images
-	 */
+	/* Load all game images */
 	private void loadImages() {
 		backgroundImg = new ImageIcon(getClass().getResource("images/bg.png")).getImage();
 		birdImg = new ImageIcon(getClass().getResource("images/bird.png")).getImage();
 		topPipeImg = new ImageIcon(getClass().getResource("images/toppipe.png")).getImage();
 		bottomPipeImg = new ImageIcon(getClass().getResource("images/bottompipe.png")).getImage();
+		gameOverImg = new ImageIcon(getClass().getResource("images/gameover.png")).getImage();
+		homeImg = new ImageIcon(getClass().getResource("images/home.png")).getImage();
 	}
 
-	/**
-	 * Initialize game objects
-	 */
+	/* Initialize game objects */
 	private void initializeGame() {
 		bird = new Bird(BIRD_X, BIRD_Y, BIRD_WIDTH, BIRD_HEIGHT, birdImg);
 		pipes = new ArrayList<>();
 	}
 
-	/**
-	 * Start game timers
-	 */
+	/* Start game timers */
 	private void startTimers() {
 		// place pipes timer
 		placePipesTimer = new Timer(PIPE_SPAWN_DELAY, new ActionListener() {
@@ -104,9 +130,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	/**
-	 * Place a new pair of pipes (top and bottom)
-	 */
+	/* Place a new pair of pipes (top and bottom)  */
 	public void placePipes()  {
 		int randomPipeY = (int) (PIPE_Y - PIPE_HEIGHT / 4 - Math.random() * (PIPE_HEIGHT / 2));
 
@@ -123,9 +147,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 		draw(g);
 	}
 
-	/**
-	 * Draw all game elements
-	 */
+	/*  Draw all game elements */
 	public void draw(Graphics g) {
 		// background
 		g.drawImage(backgroundImg, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, null);
@@ -134,19 +156,42 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 		g.drawImage(bird.img, bird.x, bird.y, bird.width, bird.height, null);
 
 		// pipes
-		for (int i = 0; i < pipes.size(); i++) {
-			Pipe pipe = pipes.get(i);
+		for (Pipe pipe : pipes) {
 			g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
 		}
 
 		// score
 		g.setColor(Color.white);
-		g.setFont(new Font("Arial", Font.PLAIN, 32));
+		g.setFont(new Font("American Typewriter", Font.BOLD, 35));
+		g.drawString(String.valueOf((int) score), 15, 40);
+
 		if (gameOver) {
-			g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
-		} else {
-			g.drawString(String.valueOf((int) score), 10, 35);
+			// semi-transparent overlay
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setColor(new Color(0, 0, 0, 60)); // noir avec opacité
+			g2d.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
+
+			// gameOverImage (192x42 px)
+			if (gameOverImg != null) {
+				int gameOverX = (BOARD_WIDTH - 192) / 2;
+				int gameOverY = 250;
+				g.drawImage(gameOverImg, gameOverX, gameOverY, 192, 42, null);
+			}
+
+			// instruction message below gameOverImage
+			g2d.setColor(Color.WHITE);
+			// g2d.setFont(new Font("American Typewriter", Font.BOLD, 20)); // remplacer par la police Flappy Bird.ttf
+			g2d.setFont(new Font("Flappy_Bird/Flappy Bird.ttf", Font.BOLD, 20));
+			String message = "[ Press SPACE to replay ]";
+			FontMetrics fm = g2d.getFontMetrics();
+			int messageX = (BOARD_WIDTH - fm.stringWidth(message)) / 2;
+			int messageY = 320;
+			g2d.drawString(message, messageX, messageY);
+
+			// home button in top right corner
+			homeButton.draw(g);
 		}
+
 	}
 
 	/**

@@ -12,10 +12,11 @@ public class Game {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
-		FlappyBird flappyBird = new FlappyBird();
-		frame.add(flappyBird);
+		MenuPanel menu = new MenuPanel();
+
+		frame.add(menu);
+
 		frame.pack();
-		flappyBird.requestFocus();
 
 		frame.setVisible(true);
 	}
