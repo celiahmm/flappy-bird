@@ -24,7 +24,6 @@ public class Game {
 
 /* TODO - Future improvements:
  *   - Add high scores tracking
- *   - Add menu screen
  *   - Improve UI/UX
  *   - Game reskin options
  */

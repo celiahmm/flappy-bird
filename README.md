@@ -7,17 +7,16 @@ A simple implementation of the classic Flappy Bird game in Java using Swing.
 ## ✨ Features
 
 - Classic Flappy Bird gameplay
-- Score tracking
 - Game over and restart functionality
-- Smooth 60 FPS gameplay
-- Sounds effects 
+- Score tracking
+- Sound effects 
 ---
 ## 🎮 How to Play
 
 * Press `SPACE` to make the bird jump
 * Avoid the pipes
 * Try to get the highest score!
-* Play again : press `SPACE` after game over to restart
+* Press `SPACE` after game over to restart
 ---
 ## 🧩 How to Run
 
@@ -37,9 +36,25 @@ java Game
 ## 🚀 Future Improvements
 
 - [ ] Add high score tracking
-- [ ] Add menu screen
 - [ ] Improve UI/UX
 - [ ] Game reskin options
+
+---
+
+## 🖼️ Screenshots
+
+<p align="left">
+    <img src="src/screenshots/menu.png" width="220" alt="Menu" />
+    <img src="src/screenshots/gameplay.png" width="220" alt="Gameplay" />
+    <img src="src/screenshots/gameover.png" width="220" alt="Écran Game Over" />
+</p>
+
+---
+## 🔧 Technologies
+
+- **Language:** Java
+- **GUI Library:** Swing
+- **IDE:** IntelliJ IDEA
 
 ---
 ## 🎓 About the Project
